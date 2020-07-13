@@ -91,6 +91,13 @@ files:
 
     RPSTest("rps.game").run_tests()
   learner_created: false
+- name: rps/game.py
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/78/stages/432/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/78/stages/432/implement">JetBrains
+    Academy</a>
+  time: Mon, 13 Jul 2020 18:34:24 UTC
 record: -1
