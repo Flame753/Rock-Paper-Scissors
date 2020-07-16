@@ -3,29 +3,37 @@ from random import choice
 
 class Game:
     def __init__(self):
-        self.player_option = input()
-        self.options = ['rock', 'scissors', 'paper']
-        self.computer_option = choice(self.options)
-        self.lose_text = "Sorry, but computer chose {}"
-        self.draw_text = "There is a draw ({})"
-        self.win_text = "Well done. Computer chose {} and failed"
+        self.player_option = None
+        self.computer_option = None
+        self.running = True
 
     def run(self):
-        self.compare_result()
+        while self.running:
+            self.player_option = input()
+            self.computer_option = choice(['rock', 'scissors', 'paper'])
+            if self.valid_option():
+                self.result()
 
-    def compare_result(self):
-        player = self.player_option
-        computer = self.computer_option
-        compare_results = (player, computer)
-        win_results = [('rock', 'scissors'), ('scissors', 'paper'), ('paper', 'rock')]
-        loss_results = [('rock', 'paper'), ('scissors', 'rock'), ('paper', 'scissors')]
+    def result(self):
+        condition = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
 
-        if compare_results in loss_results:
-            print(self.lose_text.format(computer))
-        if compare_results in win_results:
-            print(self.win_text.format(computer))
-        if player == computer:
-            print(self.draw_text.format(computer))
+        if self.player_option == "!exit":
+            print("Bye!")
+            self.running = False
+        elif self.player_option == self.computer_option:
+            print(f"There is a draw ({self.computer_option})")
+        elif self.computer_option == condition[self.player_option]:
+            print(f"Well done. Computer chose {self.computer_option} and failed")
+        else:
+            print(f"Sorry, but computer chose {self.computer_option}")
+
+    def valid_option(self):
+        valid_options = ['rock', 'scissors', 'paper', '!exit']
+        if self.player_option in valid_options:
+            return True
+
+        print('Invalid input')
+        return False
 
 
 if __name__ == "__main__":
