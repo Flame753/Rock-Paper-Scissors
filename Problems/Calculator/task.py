@@ -4,7 +4,7 @@ second_number = float(input())
 operation = str(input())
 
 
-def division_by_zero(num):
+def div_by_zero(num):
     if num == 0:
         print('Division by 0!')
         return True
@@ -15,16 +15,13 @@ if operation == '+':
     print(first_number + second_number)
 elif operation == '-':
     print(first_number - second_number)
-elif operation == '/':
-    if not division_by_zero(second_number):
-        print(first_number / second_number)
+elif operation == '/' and not div_by_zero(second_number):
+    print(first_number / second_number)
 elif operation == '*':
     print(first_number * second_number)
-elif operation == 'mod':
-    if not division_by_zero(second_number):
-        print(first_number % second_number)
+elif operation == 'mod' and not div_by_zero(second_number):
+    print(first_number % second_number)
 elif operation == 'pow':
     print(first_number ** second_number)
-elif operation == 'div':
-    if not division_by_zero(second_number):
-        print(first_number // second_number)
+elif operation == 'div' and not div_by_zero(second_number):
+    print(first_number // second_number)
