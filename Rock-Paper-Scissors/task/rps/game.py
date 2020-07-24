@@ -1,3 +1,4 @@
+import os
 from random import choice
 
 
@@ -8,14 +9,14 @@ class Game:
         self.player_option = None
         self.computer_option = None
         self.running = True
-        self.file = open('rating.txt', 'w')
-        self.file.close()
 
     def run(self):
         self.greeting()
+        self.set_up_file()
         while self.running:
             self.player_option = input()
             self.computer_option = choice(['rock', 'scissors', 'paper'])
+            self.update_file_score()
             if self.valid_option():
                 self.result()
 
@@ -40,10 +41,8 @@ class Game:
         else:
             print(f"Sorry, but computer chose {self.computer_option}")
 
-        self.file_set_score()
-
     def valid_option(self) -> bool:
-        valid_options = ['rock', 'scissors', 'paper', '!exit']
+        valid_options = ['rock', 'scissors', 'paper', '!exit', '!rating']
         if self.player_option in valid_options:
             return True
 
@@ -54,20 +53,37 @@ class Game:
         name = input('Enter your name: ')
         print('Hello, ' + name)
         self.current_player = name
-        self.file_get_score()
 
     def file_get_score(self):
-        self.file = open('rating.txt', 'r')
-        for line in self.file:
+        file = open('rating.txt', 'r')
+        for line in file:
             name, score = line.split()
             if name == self.current_player:
                 self.score = int(score)
-        self.file.close()
+        file.close()
 
-    def file_set_score(self):
-        self.file = open('rating.txt', 'a')
-        print(self.current_player + str(self.score), file=self.file)
-        self.file.close()
+    def set_up_file(self):  # Then Here Fix too
+        try:
+            os.path.getsize('rating.txt')
+            self.file_get_score()
+        except FileNotFoundError:
+            file = open('rating.txt', 'w')
+            file.write(self.current_player + ' ' + str(self.score))
+            file.close()
+
+    def update_file_score(self):
+        file = open('rating.txt', 'r')
+        new_file_content = []
+        for line in file:
+            split_line = line.split()
+            new_line = split_line[0] + ' ' + str(self.score)
+            new_file_content.append(new_line + "\n")
+            print(new_file_content)
+        file.close()
+
+        writing_file = open("rating.txt", "w")
+        writing_file.writelines(new_file_content)
+        writing_file.close()
 
 
 if __name__ == "__main__":
