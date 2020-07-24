@@ -6,9 +6,6 @@ files:
     numbers = [1234, 5678, 90]
     # save this list in `file_with_list.txt`
   learner_created: false
-- name: file_with_list.txt
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/9331
 status: Solved
 feedback:
