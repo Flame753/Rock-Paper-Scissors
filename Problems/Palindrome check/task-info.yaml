@@ -1,0 +1,21 @@
+type: code
+files:
+- name: task.py
+  visible: true
+  text: |-
+    # please work with the preset variable `word`
+    forward =  # define here
+    backward =  # define here
+
+    if forward == backward:
+        print("Yes")
+    else:
+        print("No")
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/6971
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/6971">JetBrains
+    Academy</a></html>
+  time: Fri, 24 Jul 2020 19:38:50 UTC
+record: -1
