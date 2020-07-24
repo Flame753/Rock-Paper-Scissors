@@ -146,13 +146,7 @@ files:
 - name: rps/game.py
   visible: true
   learner_created: true
-- name: rps/testing.py
-  visible: true
-  learner_created: true
-- name: rps/file1.txt
-  visible: true
-  learner_created: true
-- name: rps/file2.txt
+- name: rps/rating.txt
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/78/stages/434/implement
