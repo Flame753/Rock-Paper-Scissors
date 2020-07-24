@@ -3,9 +3,10 @@ from random import choice
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, options='rock,scissors,paper'):
         self.current_player = None
         self.score = 0
+        self.options = options.split(',')
         self.player_option = None
         self.computer_option = None
         self.running = True
@@ -15,7 +16,7 @@ class Game:
         self.set_up_file()
         while self.running:
             self.player_option = input()
-            self.computer_option = choice(['rock', 'scissors', 'paper'])
+            self.computer_option = choice(self.options)
             self.update_file_score()
             if self.valid_option():
                 self.result()
