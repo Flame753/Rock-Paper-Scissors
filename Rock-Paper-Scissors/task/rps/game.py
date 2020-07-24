@@ -3,16 +3,20 @@ from random import choice
 
 
 class Game:
-    def __init__(self, options='rock,scissors,paper'):
+    def __init__(self):
         self.current_player = None
         self.score = 0
-        self.options = options.split(',')
+        self.options = 'rock,paper,scissors'.split(',')
+        self.conditions = {}
         self.player_option = None
         self.computer_option = None
         self.running = True
 
-    def run(self):
+    def play(self):
         self.greeting()
+        self.options = input().split(',')
+        print("Okay, let's start")
+        self.set_up_conditions()
         self.set_up_file()
         while self.running:
             self.player_option = input()
@@ -21,9 +25,18 @@ class Game:
             if self.valid_option():
                 self.result()
 
-    def result(self):
-        condition = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
+    def set_up_conditions(self):
+        length = len(self.options) - 1
+        start = 1
+        end = 1 + (length//2)
+        self.options.reverse()
+        for option in self.options:
+            self.conditions.update({option: self.options[start: end]})
+            start += 1
+            end += 1
+        print(self.conditions)
 
+    def result(self):
         if self.player_option == "!exit":
             print("Bye!")
             self.running = False
@@ -35,7 +48,7 @@ class Game:
             print(f"There is a draw ({self.computer_option})")
             self.score += 50
 
-        elif self.computer_option == condition[self.player_option]:
+        elif self.computer_option == self.conditions[self.player_option]:
             print(f"Well done. Computer chose {self.computer_option} and failed")
             self.score += 100
 
@@ -93,5 +106,4 @@ class Game:
 
 
 if __name__ == "__main__":
-    r = Game()
-    r.run()
+    Game().play()
