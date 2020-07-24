@@ -54,7 +54,7 @@ class Game:
         print('Hello, ' + name)
         self.current_player = name
 
-    def file_get_score(self):
+    def get_file_score(self):
         file = open('rating.txt', 'r')
         for line in file:
             name, score = line.split()
@@ -62,10 +62,15 @@ class Game:
                 self.score = int(score)
         file.close()
 
-    def set_up_file(self):  # Then Here Fix too
+    def set_up_file(self):
         try:
-            os.path.getsize('rating.txt')
-            self.file_get_score()
+            file_size = os.path.getsize('rating.txt')
+            if file_size == 0:
+                file = open('rating.txt', 'a')
+                file.write(self.current_player + ' ' + str(self.score))
+                file.close()
+            else:
+                self.get_file_score()
         except FileNotFoundError:
             file = open('rating.txt', 'w')
             file.write(self.current_player + ' ' + str(self.score))
