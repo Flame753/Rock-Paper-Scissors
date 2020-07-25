@@ -1,1 +1,3 @@
-tim 50
+sam 100
+anna 200
+tom 0
