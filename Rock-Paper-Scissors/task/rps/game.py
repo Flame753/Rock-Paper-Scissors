@@ -49,7 +49,7 @@ class Game:
             print(f"There is a draw ({self.computer_option})")
             self.score += 50
 
-        elif self.computer_option == self.conditions[self.player_option]:
+        elif self.computer_option in self.conditions[self.player_option]:
             print(f"Well done. Computer chose {self.computer_option} and failed")
             self.score += 100
 
@@ -98,7 +98,6 @@ class Game:
             split_line = line.split()
             new_line = split_line[0] + ' ' + str(self.score)
             new_file_content.append(new_line + "\n")
-            print(new_file_content)
         file.close()
 
         writing_file = open("rating.txt", "w")
