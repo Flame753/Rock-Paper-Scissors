@@ -82,20 +82,18 @@ class Game:
             if file_size == 0:  # If File Empty
                 file = open('rating.txt', 'a')
                 print(self.current_player, self.score, file=file)
-                #file.write(self.current_player + ' ' + str(self.score) + '\n')
                 file.close()
             else:
                 file = open('rating.txt', 'r')
                 new_file_content = []
-                for line in file:  # Broken its Doubling the name
+                for line in file:
                     name, score = line.split()
                     if name == self.current_player:  # If name Exist
                         self.score = int(score)
                         break
-                    else:
-                        new_line = self.current_player + ' ' + str(self.score)
-                        new_file_content.append(new_line + "\n")
-                        break
+                else:
+                    new_line = self.current_player + ' ' + str(self.score)
+                    new_file_content.append(new_line + "\n")
                 file.close()
 
                 file = open('rating.txt', 'a')
@@ -104,7 +102,7 @@ class Game:
 
         except FileNotFoundError:
             file = open('rating.txt', 'w')
-            file.write(self.current_player + ' ' + str(self.score))
+            print(self.current_player, self.score, file=file)
             file.close()
 
     def update_file_score(self):
