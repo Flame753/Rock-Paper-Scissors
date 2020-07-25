@@ -20,7 +20,6 @@ class Game:
         while self.running:
             self.player_option = input()
             self.computer_option = choice(self.custom_options)
-            self.update_file_score()
             if self.valid_option():
                 self.result()
 
@@ -53,10 +52,12 @@ class Game:
         elif self.player_option == self.computer_option:
             print(f"There is a draw ({self.computer_option})")
             self.score += 50
+            self.update_file_score()
 
         elif self.computer_option in self.conditions[self.player_option]:
             print(f"Well done. Computer chose {self.computer_option} and failed")
             self.score += 100
+            self.update_file_score()
 
         else:
             print(f"Sorry, but computer chose {self.computer_option}")
@@ -80,18 +81,21 @@ class Game:
             file_size = os.path.getsize('rating.txt')
             if file_size == 0:  # If File Empty
                 file = open('rating.txt', 'a')
-                file.write(self.current_player + ' ' + str(self.score))
+                print(self.current_player, self.score, file=file)
+                #file.write(self.current_player + ' ' + str(self.score) + '\n')
                 file.close()
             else:
                 file = open('rating.txt', 'r')
                 new_file_content = []
-                for line in file:
+                for line in file:  # Broken its Doubling the name
                     name, score = line.split()
                     if name == self.current_player:  # If name Exist
                         self.score = int(score)
+                        break
                     else:
                         new_line = self.current_player + ' ' + str(self.score)
                         new_file_content.append(new_line + "\n")
+                        break
                 file.close()
 
                 file = open('rating.txt', 'a')
@@ -103,12 +107,11 @@ class Game:
             file.write(self.current_player + ' ' + str(self.score))
             file.close()
 
-    def update_file_score(self):  # Broken its Doubling the name
+    def update_file_score(self):
         file = open('rating.txt', 'r')
         new_file_content = []
         for line in file:
             split_line = line.split()
-            print(split_line[0], split_line[1])
             if split_line[0] == self.current_player:
                 new_line = split_line[0] + ' ' + str(self.score)
             else:
