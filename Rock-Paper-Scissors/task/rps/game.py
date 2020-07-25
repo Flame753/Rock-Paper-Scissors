@@ -37,7 +37,6 @@ class Game:
         end = 1 + (length//2)
         new_options.reverse()
         new_options.extend(new_options)
-        print(new_options, self.custom_options)
         for index in range(0, length+1):
             self.conditions.update({new_options[index]: new_options[start: end]})
             start += 1
@@ -76,23 +75,29 @@ class Game:
         print('Hello, ' + name)
         self.current_player = name
 
-    def get_file_score(self):
-        file = open('rating.txt', 'r')
-        for line in file:
-            name, score = line.split()
-            if name == self.current_player:
-                self.score = int(score)
-        file.close()
-
     def set_up_file(self):
         try:
             file_size = os.path.getsize('rating.txt')
-            if file_size == 0:
+            if file_size == 0:  # If File Empty
                 file = open('rating.txt', 'a')
                 file.write(self.current_player + ' ' + str(self.score))
                 file.close()
             else:
-                self.get_file_score()
+                file = open('rating.txt', 'r')
+                new_file_content = []
+                for line in file:
+                    name, score = line.split()
+                    if name == self.current_player:  # If name Exist
+                        self.score = int(score)
+                    else:
+                        new_line = self.current_player + ' ' + str(self.score)
+                        new_file_content.append(new_line + "\n")
+                file.close()
+
+                file = open('rating.txt', 'a')
+                file.writelines(new_file_content)
+                file.close()
+
         except FileNotFoundError:
             file = open('rating.txt', 'w')
             file.write(self.current_player + ' ' + str(self.score))
@@ -103,7 +108,11 @@ class Game:
         new_file_content = []
         for line in file:
             split_line = line.split()
-            new_line = split_line[0] + ' ' + str(self.score)
+            print(split_line[0], split_line[1])
+            if split_line[0] == self.current_player:
+                new_line = split_line[0] + ' ' + str(self.score)
+            else:
+                new_line = split_line[0] + ' ' + split_line[1]
             new_file_content.append(new_line + "\n")
         file.close()
 

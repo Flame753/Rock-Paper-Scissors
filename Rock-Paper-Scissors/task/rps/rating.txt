@@ -1,1 +1,3 @@
-tim 0
+tim 200
+sam 150
+tim 200
