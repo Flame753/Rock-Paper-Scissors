@@ -1,5 +1,6 @@
 import os
 from random import choice
+from typing import List
 
 
 class Game:
@@ -30,11 +31,11 @@ class Game:
         start = 1
         end = 1 + (length//2)
         self.options.reverse()
-        for option in self.options:
-            self.conditions.update({option: self.options[start: end]})
+        self.options.extend(self.options)
+        for index in range(0, length+1):
+            self.conditions.update({self.options[index]: self.options[start: end]})
             start += 1
             end += 1
-        print(self.conditions)
 
     def result(self):
         if self.player_option == "!exit":
