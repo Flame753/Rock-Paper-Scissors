@@ -1,13 +1,12 @@
 import os
 from random import choice
-from typing import List
 
 
 class Game:
     def __init__(self):
         self.current_player = None
         self.score = 0
-        self.options = 'rock,paper,scissors'.split(',')
+        self.custom_options = None
         self.conditions = {}
         self.player_option = None
         self.computer_option = None
@@ -15,25 +14,32 @@ class Game:
 
     def play(self):
         self.greeting()
-        self.options = input().split(',')
-        print("Okay, let's start")
+        self.set_up_custom_options()
         self.set_up_conditions()
         self.set_up_file()
         while self.running:
             self.player_option = input()
-            self.computer_option = choice(self.options)
+            self.computer_option = choice(self.custom_options)
             self.update_file_score()
             if self.valid_option():
                 self.result()
 
+    def set_up_custom_options(self):  # Would need to prevent some case
+        self.custom_options = input().split(',')
+        if self.custom_options == ['']:
+            self.custom_options = 'rock,paper,scissors'.split(',')
+        print("Okay, let's start")
+
     def set_up_conditions(self):
-        length = len(self.options) - 1
+        new_options = self.custom_options.copy()
+        length = len(new_options) - 1
         start = 1
         end = 1 + (length//2)
-        self.options.reverse()
-        self.options.extend(self.options)
+        new_options.reverse()
+        new_options.extend(new_options)
+        print(new_options, self.custom_options)
         for index in range(0, length+1):
-            self.conditions.update({self.options[index]: self.options[start: end]})
+            self.conditions.update({new_options[index]: new_options[start: end]})
             start += 1
             end += 1
 
@@ -57,7 +63,8 @@ class Game:
             print(f"Sorry, but computer chose {self.computer_option}")
 
     def valid_option(self) -> bool:
-        valid_options = ['rock', 'scissors', 'paper', '!exit', '!rating']
+        valid_options = ['!exit', '!rating']
+        valid_options.extend(self.custom_options)
         if self.player_option in valid_options:
             return True
 
