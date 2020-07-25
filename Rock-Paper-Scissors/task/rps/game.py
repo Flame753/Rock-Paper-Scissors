@@ -103,7 +103,7 @@ class Game:
             file.write(self.current_player + ' ' + str(self.score))
             file.close()
 
-    def update_file_score(self):
+    def update_file_score(self):  # Broken its Doubling the name
         file = open('rating.txt', 'r')
         new_file_content = []
         for line in file:
